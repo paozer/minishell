@@ -6,7 +6,7 @@
 #    By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 02:26:02 by pminne            #+#    #+#              #
-#    Updated: 2020/06/06 16:04:48 by pramella         ###   ########lyon.fr    #
+#    Updated: 2020/06/08 18:47:51 by pramella         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,24 +34,18 @@ SRCS	=	$(SRCS_D)minishell.c\
 			$(SRCS_D)builtin/pwd.c\
 			$(SRCS_D)builtin/unset.c\
 			$(SRCS_D)history/history.c\
-			$(SRCS_D)history/ft_dlst1.c\
-			$(SRCS_D)history/ft_dlst2.c\
+			$(SRCS_D)history/dllst_utils.c\
 			$(SRCS_D)signal/signal.c\
-			$(SRCS_D)terminal/set_terminal.c\
-			$(SRCS_D)terminal/set_terminal2.c\
-			$(SRCS_D)terminal/terminal_gnl.c\
-			$(SRCS_D)terminal/terminal_gnl_utils.c\
-			$(SRCS_D)terminal/terminal_utils.c\
-			$(SRCS_D)terminal/terminal_utils2.c\
-			$(SRCS_D)terminal/copy_paste.c\
-			$(SRCS_D)terminal/copy_paste2.c\
-			$(SRCS_D)terminal/key_up.c\
-			$(SRCS_D)terminal/key_down.c\
-			$(SRCS_D)terminal/key_left.c\
-			$(SRCS_D)terminal/key_right.c\
-			$(SRCS_D)terminal/edit_line.c\
 			$(SRCS_D)terminal/backspace.c\
-			$(SRCS_D)utils/display_prompt.c\
+			$(SRCS_D)terminal/edit_line.c\
+			$(SRCS_D)terminal/get_next_line.c\
+			$(SRCS_D)terminal/get_next_line_utils.c\
+			$(SRCS_D)terminal/init_terminal.c\
+			$(SRCS_D)terminal/keys_right_left.c\
+			$(SRCS_D)terminal/keys_up_down.c\
+			$(SRCS_D)terminal/prompt.c\
+			$(SRCS_D)terminal/utils.c\
+			$(SRCS_D)terminal/utils2.c\
 			$(SRCS_D)utils/free.c\
 			$(SRCS_D)utils/list_cmd.c\
 			$(SRCS_D)utils/list_env.c\

@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 15:33:35 by pramella          #+#    #+#             */
-/*   Updated: 2020/06/05 23:05:12 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/08 18:53:46 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,6 @@ t_dlst				*ft_newdlst(void *ctn);
 t_dlst				*ft_dlstadd_back(t_dlst **hst, void *ctn);
 void				ft_dlstiter(t_dlst *hst);
 void				ft_dlstiter_up(t_dlst *hst);
-void				ft_dlst_up(t_dlst **act);
-void				ft_dlst_down(t_dlst **act);
 int					ft_dlst_save(char *filename, t_dlst *hst);
 void				ft_dlstclear(t_dlst **fst);
 
@@ -221,7 +219,7 @@ void				trm_lstclear_gnl(int fd, t_list_fd **head);
 /*
 **	EDIT_LINE.C
 */
-void				add_letter(char **line, char c, int h);
+void				add_letter(char **line, char c, size_t h);
 char				*add_print(char *buf, t_all *gbl,
 					char **line, int *padding_letter);
 

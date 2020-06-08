@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlst1.c                                         :+:      :+:    :+:   */
+/*   dllst_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:44:59 by pramella          #+#    #+#             */
-/*   Updated: 2020/05/06 15:32:01 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/08 19:05:16 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,31 @@ t_dlst	*ft_newdlst(void *ctn)
 	dst->prev = NULL;
 	dst->next = NULL;
 	return (dst);
+}
+
+int		ft_dlst_save(char *filename, t_dlst *hst)
+{
+	int fd;
+	int ret;
+
+	if (!hst)
+		return (-1);
+	fd = open(filename, O_CREAT | O_RDWR, 0644);
+	ret = 0;
+	if (fd < 0)
+		return (-1);
+	while (hst->next)
+	{
+		if (ft_strlen((char*)hst->data) > 0)
+		{
+			ret = write(fd, hst->data, ft_strlen((char*)hst->data));
+			if (ret == 0)
+				return (-1);
+			write(fd, "\n", 1);
+		}
+		hst = hst->next;
+	}
+	write(fd, hst->data, ft_strlen((char*)hst->data));
+	close(fd);
+	return (0);
 }

@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal_utils2.c                                  :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 21:32:22 by pminne            #+#    #+#             */
-/*   Updated: 2020/05/05 21:33:46 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/08 18:47:08 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	*dup_key(char *buf)
 {
 	char *dst;
 
-	if (!(dst = malloc(sizeof(char) * BUFFER_SIZE + 1)))
+	if (!(dst = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (NULL);
 	dst[0] = '\0';
 	free(buf);
@@ -54,7 +54,7 @@ void	check_end(t_all *gbl, char *buf, char **line)
 
 char	*empty_new_line(char **line, char *buf)
 {
-	ft_printf("\n");
+	write(1, "\n", 1);
 	free(*line);
 	*line = NULL;
 	return (buf);

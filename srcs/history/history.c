@@ -35,7 +35,7 @@ t_dlst	*check_history(t_all *gbl)
 {
 	int		fd;
 
-	fd = open(gbl->hst_path, O_RDONLY, 0644);
+	fd = open(gbl->hst_path, O_RDONLY);
 	gbl->hst = ft_newdlst(NULL);
 	if (fd < 0)
 	{

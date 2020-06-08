@@ -10,34 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-static	void	loop_cut_characters(int s, char *dst, char *tmp)
+static void	loop_cut_characters(int s, char *dst, char *tmp)
 {
-	int		i;
-	int		w;
+	int i;
+	int j;
 
 	i = 0;
-	w = 0;
+	j = 0;
 	while (tmp[i])
 	{
 		if (i != s)
 		{
-			dst[w] = tmp[i];
-			++w;
+			dst[j] = tmp[i];
+			++j;
 		}
 		++i;
 	}
-	dst[w] = '\0';
+	dst[j] = '\0';
 }
 
-static	int		cut_characters(t_all *gbl, char **line)
+static int	cut_characters(t_all *gbl, char **line)
 {
 	char *dst;
 	char *tmp;
 
 	tmp = *line;
-	if (!(dst = malloc(sizeof(char) * ft_strlen(tmp))))
+	if (!(dst = malloc(sizeof(*dst) * ft_strlen(tmp))))
 		return (0);
 	loop_cut_characters(gbl->spc->s - 1, dst, tmp);
 	free(tmp);
@@ -45,14 +45,14 @@ static	int		cut_characters(t_all *gbl, char **line)
 	return (1);
 }
 
-char			*trm_backspace(t_all *gbl, char **line, char *buf)
+char		*trm_backspace(t_all *gbl, char **line, char *buf)
 {
 	ft_putstr_fd(gbl->term_key->left, 0);
 	ft_putstr_fd(gbl->term_key->save, 0);
 	ft_putstr_fd(gbl->term_key->clear, 0);
 	if (cut_characters(gbl, line) == 0)
 	{
-		ft_printf("Error: malloc\n");
+		write(2, "minishell: malloc: Error\n", 25);
 		exit(EXIT_FAILURE);
 	}
 	display_right(gbl->spc->s - 1, line);

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pramella <pramella@42.fr>                  +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 15:18:38 by pramella          #+#    #+#             */
-/*   Updated: 2020/03/07 17:43:41 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/08 10:35:02 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// check for leaks
 static char	*replace_tilde(t_env *env, char *path, int flag)
 {
 	char	*new;
@@ -24,7 +25,7 @@ static char	*replace_tilde(t_env *env, char *path, int flag)
 		return (NULL);
 	}
 	new = ft_strjoin(tmp->value, path + 1);
-	free(path);
+	(flag) ? free(path) : 0;
 	return (new);
 }
 

@@ -14,7 +14,7 @@
 
 static int	print_error(void)
 {
-	ft_fprintf(2, "\nminishell: syntax error near unexpected token\n");
+	write(2, "\nminishell: syntax error near unexpected token\n", 47);
 	return (0);
 }
 

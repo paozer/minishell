@@ -108,7 +108,7 @@ void	execution(t_all *gbl, t_cmd *cmd)
 	{
 		if (cmd->token && is_var_declaration(cmd->token->content))
 			parse_var_declaration(cmd, &(cmd->token), gbl->env);
-		(cmd->token) ? set_fd(cmd) : 0;
+		set_fd(cmd);
 		if (cmd->token && cmd->std_in != -1)
 		{
 			if (is_builtin(cmd->token->content))
@@ -122,7 +122,7 @@ void	execution(t_all *gbl, t_cmd *cmd)
 			else
 				handle_execve(gbl, cmd, path);
 		}
-		(cmd->token) ? reset_fd(cmd) : 0;
+		reset_fd(cmd);
 		cmd = cmd->next;
 	}
 	free_cmd(gbl->cmd);

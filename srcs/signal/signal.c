@@ -38,7 +38,7 @@ void	sig_quit(int sig)
 void	sig_main(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("^C\n", 1);
+	write(1, "^C\n", 3);
 	signal(SIGINT, sig_main);
 	free(cp_gbl(PULL)->spc);
 	cp_gbl(PULL)->spc = init_cnt();

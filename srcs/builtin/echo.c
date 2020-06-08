@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** only check if (tkn)
-*/
-
 int		builtin_echo(t_list *tkn)
 {
 	int flag;
@@ -31,10 +27,8 @@ int		builtin_echo(t_list *tkn)
 	{
 		write(1, tkn->content, ft_strlen(tkn->content));
 		tkn = tkn->next;
-		if (tkn && ((char *)tkn->content)[0])
-			write(1, " ", 1);
+		(tkn) ? write(1, " ", 1) : 0;
 	}
-	if (!flag)
-		write(1, "\n", 1);
+	(!flag) ? write(1, "\n", 1) : 0;
 	return (0);
 }

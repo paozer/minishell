@@ -13,9 +13,7 @@
 #include "minishell.h"
 
 /*
-** should be fixed - needs testing
-**
-** exit [n] exits with status n when n is ommited the last exit status
+** exit [n] exits with status n when n is ommited the last exit status is used
 ** if > one arg and first non num: num arg required > exit
 ** if > one arg and first num: too many args > no exit
 ** if one arg always exit: if non num > numeric argument required

@@ -10,54 +10,47 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	add_letter(char **line, char c, int h)
+void	add_letter(char **line, char c, size_t h)
 {
-	int		i;
-	int		w;
+	size_t	i;
+	size_t	j;
 	char	*dst;
 	char	*src;
 
 	src = *line;
-	if (!(dst = malloc(sizeof(char) * (ft_strlen(src) + 2))))
+	if (!(dst = malloc(sizeof(*dst) * (ft_strlen(src) + 2))))
 		return ;
 	i = 0;
-	w = 0;
-	while (src[w])
+	j = 0;
+	while (src[j])
 	{
 		if (i == h)
 			dst[i++] = c;
 		else
-		{
-			dst[i] = src[w];
-			i++;
-			w++;
-		}
+			dst[i++] = src[j++];
 	}
 	dst[i] = '\0';
-	(src) ? free(src) : 0;
+	free(src);
 	*line = dst;
 }
 
 char	*add_print(char *buf, t_all *gbl, char **line, int *padding_letter)
 {
-	if (gbl->spc->s == (unsigned int)ft_strlen(*line))
+	if (gbl->spc->s == ft_strlen(*line))
 	{
-		ft_printf("%c", buf[0]);
+		write(1, buf, 1);
 		gbl->spc->s++;
 		return (buf);
 	}
-	else
-	{
-		ft_putstr_fd(gbl->term_key->save, 0);
-		ft_putstr_fd(gbl->term_key->clear, 0);
-		add_letter(line, buf[0], gbl->spc->s);
-		display_right(gbl->spc->s, line);
-		ft_putstr_fd(gbl->term_key->reset, 0);
-		ft_putstr_fd(buf, 1);
-		*padding_letter += 1;
-		gbl->spc->s++;
-		return (dup_key(buf));
-	}
+	ft_putstr_fd(gbl->term_key->save, 0);
+	ft_putstr_fd(gbl->term_key->clear, 0);
+	add_letter(line, buf[0], gbl->spc->s);
+	display_right(gbl->spc->s, line);
+	ft_putstr_fd(gbl->term_key->reset, 0);
+	ft_putstr_fd(buf, 1);
+	*padding_letter += 1;
+	gbl->spc->s++;
+	return (dup_key(buf));
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal_utils.c                                   :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 22:17:05 by pminne            #+#    #+#             */
-/*   Updated: 2020/05/07 01:01:25 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/08 18:47:06 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char		*terminal_hub(t_all *gbl, char *buf, char **line)
 {
@@ -18,7 +18,6 @@ char		*terminal_hub(t_all *gbl, char *buf, char **line)
 	check_key_left(gbl, buf);
 	check_key_up(gbl, buf, line);
 	check_key_down(gbl, buf, line);
-	check_paste(gbl, buf, line);
 	check_home(gbl, buf);
 	check_end(gbl, buf, line);
 	return (dup_key(buf));
@@ -26,8 +25,7 @@ char		*terminal_hub(t_all *gbl, char *buf, char **line)
 
 void		handle_ctrl_d(t_all *gbl, char **line)
 {
-	if (*line)
-		free(*line);
+	free(*line);
 	builtin_exit(gbl, NULL);
 }
 
@@ -41,7 +39,7 @@ char		*check_move_next(char *buf, t_all *gbl,
 	}
 	if (ft_strlen(buf) == 1 && !*line && buf[0] != 127)
 	{
-		ft_printf("%c", buf[0]);
+		write(1, buf, 1);
 		gbl->spc->s++;
 	}
 	if (buf[0] == 10)
@@ -63,14 +61,13 @@ char		*check_move_next(char *buf, t_all *gbl,
 
 static char	*clear_term(char **line, char *buf)
 {
-	char	*clear;
+	char *clear;
 
 	clear = ft_strdup("clear");
-	if (*line)
-		free(*line);
+	free(*line);
 	*line = clear;
 	buf[0] = '\n';
-	ft_putstr_fd("\n", 1);
+	write(1, "\n", 1);
 	return (buf);
 }
 
@@ -78,19 +75,18 @@ char		*check_move(char *buf, t_all *gbl, char **line)
 {
 	static int	padding_letter = 0;
 
-	if (buf[0] == 4 && !*line)
+	if (buf[0] == 4 && (!*line || ft_strncmp(*line, "", 1) == 0))
 		handle_ctrl_d(gbl, line);
-	if (buf[0] == 9)
+	else if (buf[0] == 9)
 		return (dup_key(buf));
-	else if (buf[0] == 4 && ft_strncmp(*line, "", 1) == 0)
-		handle_ctrl_d(gbl, line);
-	if (check_copy(gbl, buf, line) == 1)
-		return (dup_key(buf));
-	if (buf[0] == 12)
+	else if (buf[0] == 12)
 		return (clear_term(line, buf));
-	if (buf[0] == 127 && gbl->spc->s == 0)
-		return (dup_key(buf));
-	else if (buf[0] == 127 && *line && gbl->spc->s > 0)
-		return (trm_backspace(gbl, line, buf));
+	else if (buf[0] == 127)
+	{
+		if (gbl->spc->s == 0)
+			return (dup_key(buf));
+		if (*line && gbl->spc->s > 0)
+			return (trm_backspace(gbl, line, buf));
+	}
 	return (check_move_next(buf, gbl, line, &padding_letter));
 }

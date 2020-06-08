@@ -1,0 +1,22 @@
+############ parsing ############
+echo >file|echo
+echo "$" or echo $ should print $
+echo "str"$"str" should print strstr
+
+############ syntax ############
+next are all forbidden syntax:
+echo ><file
+echo |
+echo ;; echo
+; echo
+
+############ execution ############
+correct frees on execve error
+check forgotten pipe ends:
+"echo >tmp | cat" should not block
+"cat somefile >tmp | cat" should not block
+"cat < file0 > file1 | cat < file 2" outputs file2 & file1 contains file0
+
+############ builtins ############
+exit options error handling
+exit code on exit options error
