@@ -26,6 +26,7 @@ SRCS	=	$(SRCS_D)minishell.c\
 			$(SRCS_D)execution/set_fd_pipe.c\
 			$(SRCS_D)execution/set_fd_redirect.c\
 			$(SRCS_D)execution/utils.c\
+			$(SRCS_D)execution/var_declaration.c\
 			$(SRCS_D)builtin/cd.c\
 			$(SRCS_D)builtin/echo.c\
 			$(SRCS_D)builtin/env.c\
@@ -50,7 +51,6 @@ SRCS	=	$(SRCS_D)minishell.c\
 			$(SRCS_D)utils/list_cmd.c\
 			$(SRCS_D)utils/list_env.c\
 			$(SRCS_D)utils/list_token.c\
-			$(SRCS_D)utils/var_declaration.c\
 
 OBJS	=	$(SRCS:.c=.o)
 

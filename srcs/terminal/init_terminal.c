@@ -79,9 +79,9 @@ int		is_only_whitespace(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ')
-			return (1);
-		i++;
+		if (!ft_isspace(line[i]))
+			return (0);
+		++i;
 	}
-	return (0);
+	return (1);
 }

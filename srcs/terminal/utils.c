@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 22:17:05 by pminne            #+#    #+#             */
-/*   Updated: 2020/06/08 18:47:06 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/09 13:19:54 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ char		*check_move_next(char *buf, t_all *gbl,
 	}
 	if (buf[0] == 10)
 	{
-		if (*line && ft_strlen(*line) == 0)
-			return (empty_new_line(line, buf));
-		if (*line && is_only_whitespace(*line) == 0)
+		if (*line && (ft_strlen(*line) == 0 || is_only_whitespace(*line)))
 			return (empty_new_line(line, buf));
 		*padding_letter = 0;
 		return (buf);

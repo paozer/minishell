@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:45:18 by pramella          #+#    #+#             */
-/*   Updated: 2020/05/06 15:30:49 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/09 12:27:27 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_dlst	*pull_history(int fd, t_all *gbl)
 	while (get_next_line(fd, &line) == 1)
 	{
 		!(gbl->hst->data) ? (gbl->hst->data = (void*)ft_strdup(line)) :
-			(act_hst = ft_dlstadd_back(&gbl->hst, (void*)line));
+			(act_hst = dllst_add_back(&gbl->hst, (void*)line));
 		free(line);
 	}
 	!(gbl->hst->data) ? (gbl->hst->data = (void*)ft_strdup(line)) :
-		(act_hst = ft_dlstadd_back(&gbl->hst, (void*)line));
+		(act_hst = dllst_add_back(&gbl->hst, (void*)line));
 	free(line);
 	close(fd);
 	return (act_hst);
@@ -36,7 +36,7 @@ t_dlst	*check_history(t_all *gbl)
 	int		fd;
 
 	fd = open(gbl->hst_path, O_RDONLY);
-	gbl->hst = ft_newdlst(NULL);
+	gbl->hst = dllst_new(NULL);
 	if (fd < 0)
 	{
 		fd = open(gbl->hst_path, O_CREAT | O_RDWR, 0644);

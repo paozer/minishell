@@ -6,13 +6,13 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:44:59 by pramella          #+#    #+#             */
-/*   Updated: 2020/06/08 19:05:16 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/09 12:27:52 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_dlst	*ft_dlstadd_back(t_dlst **hst, void *ctn)
+t_dlst	*dllst_add_back(t_dlst **hst, void *ctn)
 {
 	t_dlst	*act;
 	t_dlst	*new;
@@ -20,46 +20,17 @@ t_dlst	*ft_dlstadd_back(t_dlst **hst, void *ctn)
 	if (!hst)
 		return (NULL);
 	else if (!*hst && ctn)
-		return (ft_newdlst(ctn));
+		return (dllst_new(ctn));
 	act = *hst;
 	while (act->next)
 		act = act->next;
-	new = ft_newdlst(ctn);
+	new = dllst_new(ctn);
 	new->prev = act;
 	act->next = new;
 	return (new);
 }
 
-void	ft_dlstiter_up(t_dlst *hst)
-{
-	if (!hst->prev)
-		ft_printf("%s\n", (char*)hst->data);
-	else
-	{
-		while (hst->prev)
-		{
-			ft_printf("%s\n", (char*)hst->data);
-			hst = hst->prev;
-		}
-		ft_printf("%s\n", (char*)hst->data);
-	}
-}
-
-void	ft_dlstiter(t_dlst *hst)
-{
-	if (!hst->next)
-		ft_printf("'%s'\n", (char*)hst->data);
-	else
-	{
-		while (hst->next)
-		{
-			ft_printf("'%s'\n", (char*)hst->data);
-			hst = hst->next;
-		}
-	}
-}
-
-void	ft_dlstclear(t_dlst **fst)
+void	dllst_clear(t_dlst **fst)
 {
 	t_dlst	*scd;
 	t_dlst	*tmp;
@@ -75,7 +46,7 @@ void	ft_dlstclear(t_dlst **fst)
 	*fst = NULL;
 }
 
-t_dlst	*ft_newdlst(void *ctn)
+t_dlst	*dllst_new(void *ctn)
 {
 	t_dlst	*dst;
 
@@ -90,7 +61,7 @@ t_dlst	*ft_newdlst(void *ctn)
 	return (dst);
 }
 
-int		ft_dlst_save(char *filename, t_dlst *hst)
+int		dllst_save(char *filename, t_dlst *hst)
 {
 	int fd;
 	int ret;

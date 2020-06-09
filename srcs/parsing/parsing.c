@@ -71,13 +71,11 @@ t_cmd	*parsing(char *line, t_env *env, int *last_exit)
 
 	if (!valid_syntax(line))
 	{
-		free(line);
 		*last_exit = 258;
 		return (NULL);
 	}
 	cmd = NULL;
 	split_cmds(line, &cmd);
-	free(line);
 	parse_dollar(cmd, env, *last_exit);
 	parse_special_char(cmd, "|", parse_pipe);
 	parse_special_char(cmd, "<>", parse_redirect);

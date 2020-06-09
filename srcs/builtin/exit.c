@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 01:52:08 by pramella          #+#    #+#             */
-/*   Updated: 2020/05/07 00:35:26 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/09 12:27:43 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void		builtin_exit(t_all *gbl, t_list *tkn)
 	free_all(gbl);
 	if (gbl->hst && gbl->hst->data)
 	{
-		ft_dlst_save(gbl->hst_path, gbl->hst);
-		ft_dlstclear(&gbl->hst);
+		dllst_save(gbl->hst_path, gbl->hst);
+		dllst_clear(&gbl->hst);
 	}
 	else if (gbl->hst)
 		free(gbl->hst);

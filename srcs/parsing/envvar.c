@@ -12,6 +12,31 @@
 
 #include "minishell.h"
 
+/*
+** Parses env char ** into env struct list (key:value:next)
+** at program startup
+*/
+
+t_env	*parse_env(char **ev)
+{
+	size_t	i;
+	size_t	ret;
+	t_env	*env;
+	t_env	*new;
+
+	env = NULL;
+	i = 0;
+	while (ev[i])
+	{
+		ret = find_char(ev[i], '=');
+		new = env_new(ft_substr(ev[i], 0, ret),
+				ft_substr(ev[i], ret + 1, ft_strlen(ev[i] + ret + 1)), 1);
+		env_add_back(&env, new);
+		++i;
+	}
+	return (env);
+}
+
 static void	replace_env(char **s, int ret, char *env)
 {
 	size_t	i;

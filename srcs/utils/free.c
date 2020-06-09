@@ -43,9 +43,6 @@ void	free_env(t_env *env)
 
 void	free_term(t_trmkey *term_key, t_cnt *spc)
 {
-//	free(term_key->left);
-//	free(term_key->right);
-//	free(term_key->up);
 	free(term_key);
 	free(spc->save);
 	free(spc);
