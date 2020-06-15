@@ -16,14 +16,16 @@ static int	open_file(t_cmd *cmd, t_list *file, int std_fd)
 {
 	int fd;
 
-	if (cmd->append == 1 && !file->next)
-		fd = open(file->content, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else if (std_fd == STDOUT_FILENO && cmd->append == 0)
-		fd = open(file->content, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = -1;
+	if (std_fd == STDOUT_FILENO)
+	{
+		if (cmd->append)
+			fd = open(file->content, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		else
+			fd = open(file->content, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	}
 	else if (std_fd == STDIN_FILENO)
 		fd = open(file->content, O_RDONLY);
-	else
-		fd = open(file->content, O_CREAT | O_WRONLY, 0644);
 	return (fd);
 }
 
