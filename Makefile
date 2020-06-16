@@ -6,7 +6,7 @@
 #    By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 02:26:02 by pminne            #+#    #+#              #
-#    Updated: 2020/06/08 18:47:51 by pramella         ###   ########lyon.fr    #
+#    Updated: 2020/06/16 02:31:46 by pramella         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ $(NAME):$(OBJS) Makefile
 
 clean:
 		@rm -rf $(OBJS)
-		@rm -rf $(HOME)/.history
+		@rm -rf $(HOME)/.minishell_history
 		@make clean -C $(SRCS_D)libft/
 		@echo "make clean done..."
 

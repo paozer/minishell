@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 15:32:40 by pramella          #+#    #+#             */
-/*   Updated: 2020/06/16 02:27:35 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:30:00 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		main(int ac, char **av, char **ev)
 	sh = get_shell(INIT);
 	sh->env = parse_env(ev);
 	if ((tmp = get_env(sh->env, "HOME")))
-		sh->hst_path = ft_strjoin(tmp->value, "/.history");
+		sh->hst_path = ft_strjoin(tmp->value, "/.minishell_history");
 	sh->hst_on = 1;
 	sh->act_hst = check_history(sh);
 	sh->hst_on = 0;
