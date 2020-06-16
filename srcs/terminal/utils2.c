@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 21:32:22 by pminne            #+#    #+#             */
-/*   Updated: 2020/06/08 18:47:08 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:24:00 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@ void	move_cursor_left(unsigned int *s, char *left)
 	}
 }
 
-void	check_home(t_all *gbl, char *buf)
+void	check_home(t_shell *sh, char *buf)
 {
 	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 72)
 	{
-		move_cursor_left(&gbl->spc->s, gbl->term_key->left);
+		move_cursor_left(&sh->spc->s, sh->term_key->left);
 	}
 }
 
-void	check_end(t_all *gbl, char *buf, char **line)
+void	check_end(t_shell *sh, char *buf, char **line)
 {
 	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 70)
 	{
-		while (gbl->spc->s < ft_strlen(*line))
+		while (sh->spc->s < ft_strlen(*line))
 		{
-			ft_putstr_fd(gbl->term_key->right, 0);
-			gbl->spc->s += 1;
+			ft_putstr_fd(sh->term_key->right, 0);
+			sh->spc->s += 1;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 11:55:20 by pramella          #+#    #+#             */
-/*   Updated: 2020/06/08 18:46:54 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:27:35 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char				*trm_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-static int			ft_line_setup(t_list_fd *node, char **line, t_all *gbl)
+static int			ft_line_setup(t_list_fd *node, char **line, t_shell *sh)
 {
 	while (!(ft_strchr(node->buf, '\n')))
 	{
@@ -67,7 +67,7 @@ static int			ft_line_setup(t_list_fd *node, char **line, t_all *gbl)
 			if ((node->ret = read(node->fd, node->buf, BUFFER_TRM)) == -1)
 				return (-1);
 		node->buf[node->ret] = '\0';
-		node->buf = check_move(node->buf, gbl, line);
+		node->buf = check_move(node->buf, sh, line);
 		if (ft_strchr(node->buf, '\n'))
 			break ;
 		if (!(*line = trm_strjoin_gnl(*line, node->buf)))
@@ -82,7 +82,7 @@ static int			ft_line_setup(t_list_fd *node, char **line, t_all *gbl)
 	return (1);
 }
 
-int					trm_get_next_line(int fd, char **line, t_all *gbl)
+int					trm_get_next_line(int fd, char **line, t_shell *sh)
 {
 	static t_list_fd	*head;
 	t_list_fd			*node;
@@ -93,8 +93,8 @@ int					trm_get_next_line(int fd, char **line, t_all *gbl)
 		*line = NULL;
 	if (!(node = ft_list_setup(fd, &head)))
 		return (-1);
-	cp_gbl(PULL)->s_head = head;
-	if (ft_line_setup(node, line, gbl) == -1)
+	get_shell(PULL)->s_head = head;
+	if (ft_line_setup(node, line, sh) == -1)
 		return (-1);
 	if (node->ret == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:40:16 by pminne            #+#    #+#             */
-/*   Updated: 2020/06/08 18:46:58 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:24:00 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ t_trmkey	*init_termcap(void)
 	return (trm_key);
 }
 
-void	init_terminal(t_all *gbl)
+void	init_terminal(t_shell *sh)
 {
-	tcgetattr(0, &(gbl->old_term));
-	tcgetattr(0, &(gbl->new_term));
-	gbl->new_term.c_lflag &= ~(ICANON);
-	gbl->new_term.c_lflag &= ~(ECHO);
-	gbl->new_term.c_cc[VMIN] = 1;
-	gbl->new_term.c_cc[VTIME] = 0;
-	tcsetattr(0, 0, &(gbl->new_term));
+	tcgetattr(0, &(sh->old_term));
+	tcgetattr(0, &(sh->new_term));
+	sh->new_term.c_lflag &= ~(ICANON);
+	sh->new_term.c_lflag &= ~(ECHO);
+	sh->new_term.c_cc[VMIN] = 1;
+	sh->new_term.c_cc[VTIME] = 0;
+	tcsetattr(0, 0, &(sh->new_term));
 }
 
 t_cnt	*init_cnt(void)

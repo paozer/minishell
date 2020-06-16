@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 01:52:08 by pramella          #+#    #+#             */
-/*   Updated: 2020/06/09 12:27:43 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:25:24 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** if one arg always exit: if non num > numeric argument required
 */
 
-static int	is_valid_option(t_all *gbl, t_list *tkn)
+static int	is_valid_option(t_shell *sh, t_list *tkn)
 {
 	size_t	i;
 	char	c;
@@ -32,7 +32,7 @@ static int	is_valid_option(t_all *gbl, t_list *tkn)
 		{
 			ft_fprintf(2, "minishell: exit: %s: numeric argument required\n",
 					tkn->content);
-			gbl->last_exit = 2;
+			sh->last_exit = 2;
 			return (1);
 		}
 		++i;
@@ -40,32 +40,32 @@ static int	is_valid_option(t_all *gbl, t_list *tkn)
 	if (tkn->next)
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
-		gbl->last_exit = 1;
+		sh->last_exit = 1;
 		return (0);
 	}
-	gbl->last_exit = (unsigned int)ft_atoi(tkn->content);
+	sh->last_exit = (unsigned int)ft_atoi(tkn->content);
 	return (1);
 }
 
-void		builtin_exit(t_all *gbl, t_list *tkn)
+void		builtin_exit(t_shell *sh, t_list *tkn)
 {
 	int exit_value;
 
 	write(2, "exit\n", 5);
-	if (tkn && !is_valid_option(gbl, tkn))
+	if (tkn && !is_valid_option(sh, tkn))
 		return ;
-	free_all(gbl);
-	if (gbl->hst && gbl->hst->data)
+	free_all(sh);
+	if (sh->hst && sh->hst->data)
 	{
-		dllst_save(gbl->hst_path, gbl->hst);
-		dllst_clear(&gbl->hst);
+		dllst_save(sh->hst_path, sh->hst);
+		dllst_clear(&sh->hst);
 	}
-	else if (gbl->hst)
-		free(gbl->hst);
-	trm_lstclear_gnl(0, &gbl->s_head);
-	free(gbl->hst_path);
-	tcsetattr(0, 0, &(gbl->old_term));
-	exit_value = gbl->last_exit;
-	free(gbl);
+	else if (sh->hst)
+		free(sh->hst);
+	trm_lstclear_gnl(0, &sh->s_head);
+	free(sh->hst_path);
+	tcsetattr(0, 0, &(sh->old_term));
+	exit_value = sh->last_exit;
+	free(sh);
 	exit(exit_value);
 }

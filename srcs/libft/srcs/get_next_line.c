@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 16:25:14 by pramella          #+#    #+#             */
-/*   Updated: 2020/05/07 00:53:04 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:27:35 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int					get_next_line(int fd, char **line)
 		return (-1);
 	if (ft_line_setup(node, line) == -1)
 		return (-1);
-	if (cp_gbl(PULL)->hst_on == 0)
+	if (get_shell(PULL)->hst_on == 0)
 		node->ret = 0;
 	if (node->ret == 0)
 	{

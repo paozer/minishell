@@ -6,34 +6,34 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 23:27:55 by pminne            #+#    #+#             */
-/*   Updated: 2020/06/09 13:33:45 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:27:37 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** the cp_gbl function gives access to the global structure in parts of the
+** the get_shell function gives access to the global structure in parts of the
 ** program where the struct cannot be passed as an argument.
 ** signal handling, get_next_line and history_checking functions
 */
 
-t_all	*cp_gbl(int flag)
+t_shell	*get_shell(int flag)
 {
-	static t_all *gbl = NULL;
+	static t_shell *sh = NULL;
 
 	if (flag == PULL)
-		return (gbl);
+		return (sh);
 	else if (flag == INIT)
 	{
-		if (!(gbl = malloc(sizeof(t_all))))
+		if (!(sh = malloc(sizeof(t_shell))))
 			exit(EXIT_FAILURE);
-		init_terminal(gbl);
-		gbl->hst_path = NULL;
-		gbl->term_key = init_termcap();
-		gbl->spc = init_cnt();
-		gbl->last_exit = 0;
-		return (gbl);
+		init_terminal(sh);
+		sh->hst_path = NULL;
+		sh->term_key = init_termcap();
+		sh->spc = init_cnt();
+		sh->last_exit = 0;
+		return (sh);
 	}
 	return (NULL);
 }
@@ -63,15 +63,15 @@ void	sig_quit(int sig)
 
 void	sig_main(int sig)
 {
-	t_all *gbl;
+	t_shell *sh;
 
 	(void)sig;
-	gbl = cp_gbl(PULL);
+	sh = get_shell(PULL);
 	ft_putstr_fd("^C\n", 1);
 	signal(SIGINT, sig_main);
-	free(gbl->spc);
-	gbl->spc = init_cnt();
-	free(gbl->line);
-	gbl->line = NULL;
-	display_prompt(gbl->env);
+	free(sh->spc);
+	sh->spc = init_cnt();
+	free(sh->line);
+	sh->line = NULL;
+	display_prompt(sh->env);
 }

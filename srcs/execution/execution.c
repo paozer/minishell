@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 21:28:29 by pramella          #+#    #+#             */
-/*   Updated: 2020/06/06 15:09:38 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:24:46 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,23 @@ void	reset_fd(t_cmd *cmd)
 	}
 }
 
-void	handle_builtins(t_all *gbl, t_cmd *cmd, t_list *tkn)
+void	handle_builtins(t_shell *sh, t_cmd *cmd, t_list *tkn)
 {
 	set_builtin_pipe(cmd);
 	if (!ft_strncmp(tkn->content, "cd", 3))
-		gbl->last_exit = builtin_cd(gbl->env, tkn->next);
+		sh->last_exit = builtin_cd(sh->env, tkn->next);
 	else if (!ft_strncmp(tkn->content, "echo", 5))
-		gbl->last_exit = builtin_echo(tkn->next);
+		sh->last_exit = builtin_echo(tkn->next);
 	else if (!ft_strncmp(tkn->content, "env", 4))
-		gbl->last_exit = builtin_env(gbl->env);
+		sh->last_exit = builtin_env(sh->env);
 	else if (!ft_strncmp(tkn->content, "exit", 5))
-		builtin_exit(gbl, tkn->next);
+		builtin_exit(sh, tkn->next);
 	else if (!ft_strncmp(tkn->content, "export", 7))
-		gbl->last_exit = builtin_export(gbl->env, tkn->next);
+		sh->last_exit = builtin_export(sh->env, tkn->next);
 	else if (!ft_strncmp(tkn->content, "pwd", 4))
-		gbl->last_exit = builtin_pwd();
+		sh->last_exit = builtin_pwd();
 	else if (!ft_strncmp(tkn->content, "unset", 6))
-		gbl->last_exit = builtin_unset(&gbl->env, tkn->next);
+		sh->last_exit = builtin_unset(&sh->env, tkn->next);
 }
 
 /*
@@ -100,30 +100,30 @@ char	*locate_executable(t_env *env, char *name)
 	return (path);
 }
 
-void	execution(t_all *gbl, t_cmd *cmd)
+void	execution(t_shell *sh, t_cmd *cmd)
 {
 	char	*path;
 
 	while (cmd)
 	{
 		if (cmd->token && is_var_declaration(cmd->token->content))
-			parse_var_declaration(cmd, &(cmd->token), gbl->env);
+			parse_var_declaration(cmd, &(cmd->token), sh->env);
 		set_fd(cmd);
 		if (cmd->token && cmd->std_in != -1)
 		{
 			if (is_builtin(cmd->token->content))
-				handle_builtins(gbl, cmd, cmd->token);
-			else if (!(path = locate_executable(gbl->env, cmd->token->content)))
+				handle_builtins(sh, cmd, cmd->token);
+			else if (!(path = locate_executable(sh->env, cmd->token->content)))
 			{
 				ft_fprintf(2, "minishell: %s: command not found\n",
 						(char *)cmd->token->content);
-				gbl->last_exit = 127;
+				sh->last_exit = 127;
 			}
 			else
-				handle_execve(gbl, cmd, path);
+				handle_execve(sh, cmd, path);
 		}
 		reset_fd(cmd);
 		cmd = cmd->next;
 	}
-	free_cmd(gbl->cmd);
+	free_cmd(sh->cmd);
 }

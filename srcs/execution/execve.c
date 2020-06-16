@@ -6,7 +6,7 @@
 /*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 04:47:14 by pramella          #+#    #+#             */
-/*   Updated: 2020/05/08 11:22:25 by pramella         ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:25:24 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	**create_argv(t_list *tkn)
 	return (argv);
 }
 
-static void	exec(t_all *gbl, char *path, char **av, char **ev)
+static void	exec(t_shell *sh, char *path, char **av, char **ev)
 {
 	if (execve(path, av, ev) == -1)
 	{
@@ -71,21 +71,21 @@ static void	exec(t_all *gbl, char *path, char **av, char **ev)
 		free(path);
 		ft_split_free(av);
 		ft_split_free(ev);
-		free_all(gbl);
+		free_all(sh);
 		exit(1);
 	}
 }
 
-static void	parent_code(t_all *gbl, t_cmd *cmd, pid_t pid)
+static void	parent_code(t_shell *sh, t_cmd *cmd, pid_t pid)
 {
 	set_cmd_pipe(cmd);
 	sig_child(pid);
 	signal(SIGINT, sig_child);
 	signal(SIGQUIT, sig_child);
-	waitpid(pid, &gbl->last_exit, 0);
+	waitpid(pid, &sh->last_exit, 0);
 	signal(SIGINT, sig_main);
 	signal(SIGQUIT, sig_quit);
-	gbl->last_exit = WEXITSTATUS(gbl->last_exit);
+	sh->last_exit = WEXITSTATUS(sh->last_exit);
 }
 
 /*
@@ -94,24 +94,24 @@ static void	parent_code(t_all *gbl, t_cmd *cmd, pid_t pid)
 ** Parents waits for child to terminate and saves its exit status.
 */
 
-void		handle_execve(t_all *gbl, t_cmd *cmd, char *path)
+void		handle_execve(t_shell *sh, t_cmd *cmd, char *path)
 {
 	pid_t	pid;
 	char	**ev;
 	char	**av;
 
-	tcsetattr(0, 0, &(gbl->old_term));
+	tcsetattr(0, 0, &(sh->old_term));
 	if ((pid = fork()) == -1)
 		ft_fprintf(2, "minishell: fork: %s\n", strerror(errno));
 	else if (pid > 0)
-		parent_code(gbl, cmd, pid);
+		parent_code(sh, cmd, pid);
 	else
 	{
 		set_read_write_pipe(cmd);
 		av = create_argv(cmd->token);
-		ev = create_envp(gbl->env);
-		exec(gbl, path, av, ev);
+		ev = create_envp(sh->env);
+		exec(sh, path, av, ev);
 	}
 	free(path);
-	tcsetattr(0, 0, &(gbl->new_term));
+	tcsetattr(0, 0, &(sh->new_term));
 }

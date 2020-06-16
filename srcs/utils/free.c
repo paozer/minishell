@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 21:26:19 by pramella          #+#    #+#             */
-/*   Updated: 2020/05/07 00:24:17 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:24:00 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	free_term(t_trmkey *term_key, t_cnt *spc)
 	free(spc);
 }
 
-void	free_all(t_all *gbl)
+void	free_all(t_shell *sh)
 {
-	free_cmd(gbl->cmd);
-	free_env(gbl->env);
-	free_term(gbl->term_key, gbl->spc);
+	free_cmd(sh->cmd);
+	free_env(sh->env);
+	free_term(sh->term_key, sh->spc);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pminne <pminne@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: pramella <pramella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 17:46:52 by pminne            #+#    #+#             */
-/*   Updated: 2020/05/05 19:20:38 by pminne           ###   ########lyon.fr   */
+/*   Updated: 2020/06/16 02:24:00 by pramella         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ void	add_letter(char **line, char c, size_t h)
 	*line = dst;
 }
 
-char	*add_print(char *buf, t_all *gbl, char **line, int *padding_letter)
+char	*add_print(char *buf, t_shell *sh, char **line, int *padding_letter)
 {
-	if (gbl->spc->s == ft_strlen(*line))
+	if (sh->spc->s == ft_strlen(*line))
 	{
 		write(1, buf, 1);
-		gbl->spc->s++;
+		sh->spc->s++;
 		return (buf);
 	}
-	ft_putstr_fd(gbl->term_key->save, 0);
-	ft_putstr_fd(gbl->term_key->clear, 0);
-	add_letter(line, buf[0], gbl->spc->s);
-	display_right(gbl->spc->s, line);
-	ft_putstr_fd(gbl->term_key->reset, 0);
+	ft_putstr_fd(sh->term_key->save, 0);
+	ft_putstr_fd(sh->term_key->clear, 0);
+	add_letter(line, buf[0], sh->spc->s);
+	display_right(sh->spc->s, line);
+	ft_putstr_fd(sh->term_key->reset, 0);
 	ft_putstr_fd(buf, 1);
 	*padding_letter += 1;
-	gbl->spc->s++;
+	sh->spc->s++;
 	return (dup_key(buf));
 }
