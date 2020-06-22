@@ -102,12 +102,13 @@ char	*locate_executable(t_env *env, char *name)
 
 void	execution(t_shell *sh, t_cmd *cmd)
 {
-	char	*path;
+	char		*path;
+	struct stat	buf;
 
 	while (cmd)
 	{
 		if (cmd->token && is_var_declaration(cmd->token->content))
-			parse_var_declaration(cmd, &(cmd->token), sh->env);
+			parse_var_declaration(cmd, &cmd->token, sh->env);
 		set_fd(cmd);
 		if (cmd->token && cmd->std_in != -1)
 		{
@@ -115,9 +116,13 @@ void	execution(t_shell *sh, t_cmd *cmd)
 				handle_builtins(sh, cmd, cmd->token);
 			else if (!(path = locate_executable(sh->env, cmd->token->content)))
 			{
-				ft_fprintf(2, "minishell: %s: command not found\n",
-						(char *)cmd->token->content);
-				sh->last_exit = 127;
+				if (stat(cmd->token->content, &buf) == 0 && S_ISDIR(buf.st_mode))
+					builtin_cd(sh->env, cmd->token);
+				else
+				{
+					ft_fprintf(2, "minishell: %s: command not found\n", cmd->token->content);
+					sh->last_exit = 127;
+				}
 			}
 			else
 				handle_execve(sh, cmd, path);
