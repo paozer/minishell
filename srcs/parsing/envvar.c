@@ -17,7 +17,7 @@
 ** at program startup
 */
 
-t_env	*parse_env(char **ev)
+t_env		*parse_env(char **ev)
 {
 	size_t	i;
 	size_t	ret;

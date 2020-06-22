@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char *init_key(int key)
+static char	*init_key(int key)
 {
 	static char up[] = {27, 79, 65, 0};
 	static char right[] = {27, 91, 67, 0};
@@ -50,7 +50,7 @@ t_trmkey	*init_termcap(void)
 	return (trm_key);
 }
 
-void	init_terminal(t_shell *sh)
+void		init_terminal(t_shell *sh)
 {
 	tcgetattr(0, &(sh->old_term));
 	tcgetattr(0, &(sh->new_term));
@@ -61,7 +61,7 @@ void	init_terminal(t_shell *sh)
 	tcsetattr(0, 0, &(sh->new_term));
 }
 
-t_cnt	*init_cnt(void)
+t_cnt		*init_cnt(void)
 {
 	t_cnt *ret;
 
@@ -72,9 +72,9 @@ t_cnt	*init_cnt(void)
 	return (ret);
 }
 
-int		is_only_whitespace(char *line)
+int			is_only_whitespace(char *line)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (line[i])

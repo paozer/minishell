@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int				check_file_history(void)
+int			check_file_history(void)
 {
 	int		fd;
 	int		ret;
@@ -26,8 +26,7 @@ int				check_file_history(void)
 	return (1);
 }
 
-
-static void		swap_temp(t_shell *sh, char **line, char *temp)
+static void	swap_temp(t_shell *sh, char **line, char *temp)
 {
 	move_cursor_left(&sh->spc->s, sh->term_key->left);
 	ft_putstr_fd(sh->term_key->clear, 0);
@@ -38,7 +37,7 @@ static void		swap_temp(t_shell *sh, char **line, char *temp)
 	sh->spc->s = ft_strlen(*line);
 }
 
-void			check_key_down(t_shell *sh, char *buf, char **line)
+void		check_key_down(t_shell *sh, char *buf, char **line)
 {
 	char	*temp;
 	t_dlst	*t_lst;
@@ -65,7 +64,7 @@ void			check_key_down(t_shell *sh, char *buf, char **line)
 	}
 }
 
-char	*security_history_up(t_shell *sh)
+char		*security_history_up(t_shell *sh)
 {
 	char *temp;
 
@@ -85,7 +84,7 @@ char	*security_history_up(t_shell *sh)
 	return (temp);
 }
 
-void	check_key_up(t_shell *sh, char *buf, char **line)
+void		check_key_up(t_shell *sh, char *buf, char **line)
 {
 	char	*temp;
 

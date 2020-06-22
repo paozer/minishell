@@ -39,8 +39,8 @@ void	main_exec(t_shell *sh)
 
 int		main(int ac, char **av, char **ev)
 {
-	t_env *tmp;
-	t_shell *sh;
+	t_env	*tmp;
+	t_shell	*sh;
 
 	(void)ac;
 	(void)av;
