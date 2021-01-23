@@ -16,17 +16,17 @@
 ** Utilities used to handle the list of tokens
 */
 
-void	tkn_add_back(t_cmd **begin, char *content)
+void    tkn_add_back(t_cmd **begin, char *content)
 {
-	t_list	*new;
-	t_cmd	*cmd;
+    t_list  *new;
+    t_cmd   *cmd;
 
-	new = ft_lstnew(content);
-	if (!begin || !new)
-	{
-		free(new);
-		return ;
-	}
-	cmd = cmd_last(begin);
-	ft_lstadd_back(&cmd->token, new);
+    new = ft_lstnew(content);
+    if (!begin || !new)
+    {
+        free(new);
+        return ;
+    }
+    cmd = cmd_last(begin);
+    ft_lstadd_back(&cmd->token, new);
 }

@@ -12,36 +12,35 @@
 
 #include "minishell.h"
 
-t_dlst	*pull_history(int fd, t_shell *sh)
+t_dlst  *pull_history(int fd, t_shell *sh)
 {
-	char	*line;
-	t_dlst	*act_hst;
+    char    *line;
+    t_dlst  *act_hst;
 
-	line = NULL;
-	while (get_next_line(fd, &line) == 1)
-	{
-		!(sh->hst->data) ? (sh->hst->data = (void*)ft_strdup(line)) :
-			(act_hst = dllst_add_back(&sh->hst, (void*)line));
-		free(line);
-	}
-	!(sh->hst->data) ? (sh->hst->data = (void*)ft_strdup(line)) :
-		(act_hst = dllst_add_back(&sh->hst, (void*)line));
-	free(line);
-	close(fd);
-	return (act_hst);
+    line = NULL;
+    while (get_next_line(fd, &line))
+    {
+        (!sh->hst->data) ? (sh->hst->data = ft_strdup(line)) :
+            (act_hst = dllst_add_back(&sh->hst, line));
+        free(line);
+    }
+    (!sh->hst->data) ? (sh->hst->data = ft_strdup(line)) :
+        (act_hst = dllst_add_back(&sh->hst, line));
+    free(line);
+    close(fd);
+    return (act_hst);
 }
 
-t_dlst	*check_history(t_shell *sh)
+t_dlst  *check_history(t_shell *sh)
 {
-	int		fd;
+    int fd;
 
-	fd = open(sh->hst_path, O_RDONLY);
-	sh->hst = dllst_new(NULL);
-	if (fd < 0)
-	{
-		fd = open(sh->hst_path, O_CREAT | O_RDWR, 0644);
-		close(fd);
-		return (NULL);
-	}
-	return (pull_history(fd, sh));
+    sh->hst = dllst_new(NULL);
+    if ((fd = open(sh->hst_path, O_RDONLY)) < 0)
+    {
+        fd = open(sh->hst_path, O_CREAT | O_RDWR, 0644);
+        close(fd);
+        return (NULL);
+    }
+    return (pull_history(fd, sh));
 }

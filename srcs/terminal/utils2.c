@@ -12,50 +12,50 @@
 
 #include "minishell.h"
 
-char	*dup_key(char *buf)
+char    *dup_key(char *buf)
 {
-	char *dst;
+    char *dst;
 
-	if (!(dst = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (NULL);
-	dst[0] = '\0';
-	free(buf);
-	return (dst);
+    if (!(dst = malloc(sizeof(*dst) * (BUFFER_SIZE + 1))))
+        return (NULL);
+    dst[0] = '\0';
+    free(buf);
+    return (dst);
 }
 
-void	move_cursor_left(unsigned int *s, char *left)
+void    move_cursor_left(unsigned int *s, char *left)
 {
-	while (*s)
-	{
-		ft_putstr_fd(left, 0);
-		*s -= 1;
-	}
+    while (*s)
+    {
+        ft_putstr_fd(left, 0);
+        *s -= 1;
+    }
 }
 
-void	check_home(t_shell *sh, char *buf)
+void    check_home(t_shell *sh, char *buf)
 {
-	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 72)
-	{
-		move_cursor_left(&sh->spc->s, sh->term_key->left);
-	}
+    if (buf[0] == 27 && buf[1] == 91 && buf[2] == 72)
+    {
+        move_cursor_left(&sh->spc->s, sh->term_key->left);
+    }
 }
 
-void	check_end(t_shell *sh, char *buf, char **line)
+void    check_end(t_shell *sh, char *buf, char **line)
 {
-	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 70)
-	{
-		while (sh->spc->s < ft_strlen(*line))
-		{
-			ft_putstr_fd(sh->term_key->right, 0);
-			sh->spc->s += 1;
-		}
-	}
+    if (buf[0] == 27 && buf[1] == 91 && buf[2] == 70)
+    {
+        while (sh->spc->s < ft_strlen(*line))
+        {
+            ft_putstr_fd(sh->term_key->right, 0);
+            sh->spc->s += 1;
+        }
+    }
 }
 
-char	*empty_new_line(char **line, char *buf)
+char    *empty_new_line(char **line, char *buf)
 {
-	write(1, "\n", 1);
-	free(*line);
-	*line = NULL;
-	return (buf);
+    write(1, "\n", 1);
+    free(*line);
+    *line = NULL;
+    return (buf);
 }

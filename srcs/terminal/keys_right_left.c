@@ -12,36 +12,36 @@
 
 #include "minishell.h"
 
-void	check_key_left(t_shell *sh, char *buf)
+void    check_key_left(t_shell *sh, char *buf)
 {
-	if (sh->spc->s == 0)
-		return ;
-	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 68)
-	{
-		ft_putstr_fd(buf, 0);
-		sh->spc->s--;
-	}
+    if (sh->spc->s == 0)
+        return ;
+    if (buf[0] == 27 && buf[1] == 91 && buf[2] == 68)
+    {
+        ft_putstr_fd(buf, 0);
+        sh->spc->s--;
+    }
 }
 
-void	display_right(int i, char **line)
+void    display_right(int i, char **line)
 {
-	char *s;
+    char *s;
 
-	s = *line;
-	while (s[i])
-	{
-		write(1, s + i, 1);
-		++i;
-	}
+    s = *line;
+    while (s[i])
+    {
+        write(1, s + i, 1);
+        ++i;
+    }
 }
 
-void	check_key_right(t_shell *sh, char *buf, char **line)
+void    check_key_right(t_shell *sh, char *buf, char **line)
 {
-	if (!*line || sh->spc->s == ft_strlen(*line))
-		return ;
-	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 67)
-	{
-		write(0, buf, 3);
-		sh->spc->s++;
-	}
+    if (!*line || sh->spc->s == ft_strlen(*line))
+        return ;
+    if (buf[0] == 27 && buf[1] == 91 && buf[2] == 67)
+    {
+        write(0, buf, 3);
+        sh->spc->s++;
+    }
 }

@@ -12,20 +12,20 @@
 
 #include "minishell.h"
 
-int		is_builtin(char *token)
+int     is_builtin(char *token)
 {
-	int			i;
-	static char	*builtin[8] = {"cd", "echo", "env", "exit",
-								"export", "pwd", "unset", NULL};
+    int         i;
+    static char *builtin[8] = {"cd", "echo", "env", "exit",
+                                "export", "pwd", "unset", NULL};
 
-	if (!token)
-		return (0);
-	i = 0;
-	while (builtin[i])
-	{
-		if (!ft_strncmp(token, builtin[i], ft_strlen(builtin[i]) + 1))
-			return (1);
-		++i;
-	}
-	return (0);
+    if (!token)
+        return (0);
+    i = 0;
+    while (builtin[i])
+    {
+        if (!ft_strncmp(token, builtin[i], ft_strlen(builtin[i]) + 1))
+            return (1);
+        ++i;
+    }
+    return (0);
 }

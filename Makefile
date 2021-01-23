@@ -58,7 +58,7 @@ HEADER	=	$(SRCS_D)minishell.h
 
 CC		=	clang
 
-CFLAGS	=	-I$(SRCS_D) -Wall -Wextra -Werror
+CFLAGS	=	-I$(SRCS_D) -Wall -Wextra -Werror -fsanitize=address -g3
 
 %.o:	%.c $(HEADER)
 		@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)

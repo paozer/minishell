@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-int		builtin_env(t_env *env)
+int     builtin_env(t_env *env)
 {
-	while (env)
-	{
-		if (env->set)
-			ft_printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-	return (0);
+    while (env)
+    {
+        if (env->set)
+            ft_printf("%s=%s\n", env->key, env->value);
+        env = env->next;
+    }
+    return (0);
 }
